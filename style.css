@@ -1,0 +1,930 @@
+ 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        header {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #4a4a4a;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .game-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        
+        .logo-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            overflow: hidden;
+        }
+        
+        .logo-blur {
+            /* filter: blur(8px); */
+            transition: filter 0.5s ease;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .option-btn {
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        
+        .option-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .option-btn.correct {
+            background-color: #4caf50;
+            color: white;
+        }
+        
+        .option-btn.incorrect {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .input-container {
+            margin-bottom: 20px;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        
+        .answer-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.2s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .submit-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .input-mode-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .mode-btn {
+            background-color: #f0f0f0;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .mode-btn:first-child {
+            border-radius: 6px 0 0 6px;
+        }
+        
+        .mode-btn:last-child {
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .mode-btn.active {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .score {
+            font-weight: bold;
+        }
+        
+        .level-display {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .hints-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .hint-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .hint-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .hint-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .hint-text {
+            margin-top: 10px;
+            font-style: italic;
+            min-height: 20px;
+        }
+        
+        .next-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 0 auto;
+            transition: background-color 0.2s ease;
+        }
+        
+        .next-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .next-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .feedback {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            min-height: 27px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .game-over-container {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .game-over-container h2 {
+            margin-bottom: 15px;
+            color: #3498db;
+        }
+        
+        .restart-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .restart-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .instructions {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .instructions h2 {
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .difficulty-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .easy {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .medium {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        .hard {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #3498db;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        /* Logo Styles */
+        .logo {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 36px;
+        }
+        
+        /* Tech Company Logos */
+        .google-logo {
+            font-family: 'Product Sans', Arial, sans-serif;
+            position: relative;
+            filter: blur(8px);
+        }
+        
+        .google-logo span:nth-child(1) { color: #4285f4; }
+        .google-logo span:nth-child(2) { color: #ea4335; }
+        .google-logo span:nth-child(3) { color: #fbbc05; }
+        .google-logo span:nth-child(4) { color: #4285f4; }
+        .google-logo span:nth-child(5) { color: #34a853; }
+        .google-logo span:nth-child(6) { color: #ea4335; }
+        
+        .facebook-logo {
+            background-color: #1877f2;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 800;
+            letter-spacing: -2px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .apple-logo {
+            background-color: #000;
+            color: white;
+            font-family: 'SF Pro Display', Arial, sans-serif;
+            position: relative;
+        }
+        
+        .apple-logo::after {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: #000;
+            border-radius: 15px;
+        }
+        
+        .apple-logo span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .twitter-logo {
+            background-color: #000;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 72px;
+        }
+        
+        .amazon-logo {
+            background-color: #fff;
+            color: #ff9900;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .amazon-logo::after {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 20px;
+            background-color: #ff9900;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+        
+        .microsoft-logo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 5px;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .microsoft-logo div:nth-child(1) { background-color: #f25022; }
+        .microsoft-logo div:nth-child(2) { background-color: #7fba00; }
+        .microsoft-logo div:nth-child(3) { background-color: #00a4ef; }
+        .microsoft-logo div:nth-child(4) { background-color: #ffb900; }
+        
+        .tesla-logo {
+            position: relative;
+            background-color: #fff;
+        }
+        
+        .tesla-logo::after {
+            content: "T";
+            position: absolute;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 120px;
+            color: #cc0000;
+        }
+        
+        .ibm-logo {
+            background-color: #fff;
+            color: #1e4da1;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 42px;
+        }
+        
+        .intel-logo {
+            background-color: #0071c5;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 36px;
+        }
+        
+        .spotify-logo {
+            background-color: #1DB954;
+            position: relative;
+        }
+        
+        .spotify-logo::after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #000;
+            border-radius: 50%;
+        }
+        
+        /* Food & Beverage Logos */
+        .nike-logo {
+            background-color: #fff;
+            position: relative;
+        }
+        
+        .nike-logo::after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 30px;
+            background-color: #000;
+            border-radius: 50% 0 50% 0;
+            transform: rotate(-30deg);
+        }
+        
+        .cocacola-logo {
+            background-color: #f40009;
+            color: white;
+            font-family: 'Brush Script MT', cursive;
+            font-style: italic;
+            font-size: 32px;
+        }
+        
+        .mcdonalds-logo {
+            background-color: #fff;
+            position: relative;
+        }
+        
+        .mcdonalds-logo::before {
+            content: "M";
+            position: absolute;
+            color: #FFC72C;
+            font-size: 120px;
+            font-weight: bold;
+            line-height: 0.8;
+        }
+        
+        .starbucks-logo {
+            background-color: #006241;
+            color: white;
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        .starbucks-logo::after {
+            content: "★";
+            position: absolute;
+            font-size: 80px;
+            color: white;
+        }
+        
+        .pepsi-logo {
+            background: linear-gradient(#034ea1 33%, white 33%, white 66%, #ed1c24 66%);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .subway-logo {
+            background-color: #008c15;
+            color: #ffc600;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 28px;
+        }
+        
+        .kfc-logo {
+            background-color: #fc0d1b;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 38px;
+        }
+        
+        .burgerking-logo {
+            background-color: #f9c747;
+            color: #ed1c24;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 28px;
+        }
+        
+        .dominos-logo {
+            background-color: #006491;
+            position: relative;
+        }
+        
+        .dominos-logo::before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 80px solid red;
+        }
+        
+        /* Entertainment Logos */
+        .netflix-logo {
+            background-color: #000;
+            color: #E50914;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 40px;
+            letter-spacing: -2px;
+        }
+        
+        .disney-logo {
+            background-color: #0053a0;
+            color: white;
+            font-family: 'Brush Script MT', cursive;
+            font-style: italic;
+            font-size: 40px;
+        }
+        
+        .hbomax-logo {
+            background-color: #741deb;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 32px;
+        }
+        
+        .hulu-logo {
+            background-color: #1ce783;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 36px;
+        }
+        
+        .paramount-logo {
+            background-color: #0064ff;
+            position: relative;
+        }
+        
+        .paramount-logo::after {
+            content: "★";
+            position: absolute;
+            font-size: 80px;
+            color: white;
+        }
+        
+        /* Auto Logos */
+        .bmw-logo {
+            background-color: #000;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bmw-logo::before {
+            content: "";
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #0066b1 0deg 90deg,
+                #0066b1 90deg 180deg,
+                white 180deg 270deg,
+                white 270deg 360deg
+            );
+            top: 15px;
+            left: 15px;
+        }
+        
+        .mercedes-logo {
+            background-color: #222;
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        .mercedes-logo::after {
+            content: "★";
+            position: absolute;
+            font-size: 80px;
+            color: silver;
+        }
+        
+        .audi-logo {
+            background-color: #000;
+            position: relative;
+        }
+        
+        .audi-logo::after {
+            content: "⊕⊕⊕⊕";
+            position: absolute;
+            font-size: 30px;
+            color: silver;
+            letter-spacing: -10px;
+        }
+        
+        .toyota-logo {
+            background-color: #eb0a1e;
+            position: relative;
+        }
+        
+        .toyota-logo::after {
+            content: "T";
+            position: absolute;
+            font-size: 100px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .honda-logo {
+            background-color: #0082c9;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 36px;
+        }
+        
+        /* Retail Logos */
+        .walmart-logo {
+            background-color: #0071ce;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 30px;
+        }
+        
+        .target-logo {
+            background-color: #fff;
+            position: relative;
+        }
+        
+        .target-logo::before,
+        .target-logo::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+        }
+        
+        .target-logo::before {
+            width: 80px;
+            height: 80px;
+            background-color: #cc0000;
+        }
+        
+        .target-logo::after {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+        }
+        
+        .ikea-logo {
+            background-color: #0051ba;
+            color: #ffda1a;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 40px;
+        }
+        
+        .costco-logo {
+            background-color: #005daa;
+            color: #d93531;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 30px;
+        }
+        
+        .bestbuy-logo {
+            background-color: #0046be;
+            color: #fff200;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 32px;
+        }
+        
+        /* Sportswear Logos */
+        .adidas-logo {
+            background-color: #000;
+            position: relative;
+        }
+        
+        .adidas-logo::after {
+            content: "///";
+            position: absolute;
+            font-size: 80px;
+            color: white;
+            transform: rotate(30deg);
+            letter-spacing: -20px;
+        }
+        
+        .puma-logo {
+            background-color: #000;
+            position: relative;
+        }
+        
+        .puma-logo::after {
+            content: "➤";
+            position: absolute;
+            font-size: 80px;
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .underarmour-logo {
+            background-color: #000;
+            position: relative;
+        }
+        
+        .underarmour-logo::after {
+            content: "∩∩";
+            position: absolute;
+            font-size: 60px;
+            color: white;
+        }
+        
+        .reebok-logo {
+            background-color: #000;
+            position: relative;
+        }
+        
+        .reebok-logo::after {
+            content: "∆";
+            position: absolute;
+            font-size: 80px;
+            color: #fd0100;
+        }
+        
+        .newbalance-logo {
+            background-color: #cf0a2c;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 40px;
+        }
+        
+        /* Other Famous Logos */
+        .airbnb-logo {
+            background-color: #ff5a5f;
+            position: relative;
+        }
+        
+        .airbnb-logo::after {
+            content: "◊";
+            position: absolute;
+            font-size: 80px;
+            color: white;
+            transform: rotate(45deg);
+        }
+        
+        .mastercard-logo {
+            background-color: #fff;
+            position: relative;
+        }
+        
+        .mastercard-logo::before,
+        .mastercard-logo::after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            top: 25px;
+        }
+        
+        .mastercard-logo::before {
+            background-color: #eb001b;
+            left: 35px;
+        }
+        
+        .mastercard-logo::after {
+            background-color: #f79e1b;
+            right: 35px;
+        }
+        
+        .visa-logo {
+            background-color: #fff;
+            color: #1434cb;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 40px;
+            font-style: italic;
+        }
+        
+        .fedex-logo {
+            background: linear-gradient(to right, #4d148c 50%, #ff6600 50%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 32px;
+        }
+        
+        .ups-logo {
+            background-color: #351c15;
+            color: #ffb500;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 40px;
+        }
+        
+        .snapchat-logo {
+            background-color: #fffc00;
+            position: relative;
+        }
+        
+        .snapchat-logo::after {
+            content: "👻";
+            position: absolute;
+            font-size: 60px;
+        }
+        
+        .instagram-logo {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+            border-radius: 25%;
+            position: relative;
+        }
+        
+        .instagram-logo::after {
+            content: "◉";
+            position: absolute;
+            font-size: 60px;
+            color: white;
+        }
+        
+        .tiktok-logo {
+            background-color: #000;
+            position: relative;
+        }
+        
+        .tiktok-logo::before {
+            content: "";
+            position: absolute;
+            width: 40px;
+            height: 70px;
+            background-color: #00f2ea;
+            right: 30px;
+        }
+        
+        .tiktok-logo::after {
+            content: "";
+            position: absolute;
+            width: 40px;
+            height: 70px;
+            background-color: #ff004f;
+            left: 30px;
+        }
+        
+        @media (max-width: 480px) {
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo-container {
+                width: 150px;
+                height: 150px;
+            }
+        }
